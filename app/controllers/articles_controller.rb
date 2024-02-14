@@ -5,10 +5,10 @@ class ArticlesController < ApplicationController
 
 
   def index
-    @articles = Article.all
+    @articles = Article.paginate(page: params[:page])
   end
 
-  # GET /articles/1 or /articles/1.json
+
   def show
   end
 
@@ -59,11 +59,6 @@ class ArticlesController < ApplicationController
       format.json { head :no_content }
     end
   end
-
-  def search
-    key = params[:query]
-    @results = Article.all.where("title LIKE ?","%#{key}%")
-  end 
 
   private
     # Use callbacks to share common setup or constraints between actions.
