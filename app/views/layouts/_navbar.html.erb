@@ -30,7 +30,8 @@
             </a>
             <ul class="dropdown-menu">
                  <li><a class="dropdown-item" href="<%=edit_user_path(current_user)%>">Edit your profile</a></li>
-              <li><a class="dropdown-item" href="<%=user_path(current_user)%>">View your profile</a></li>
+                 <li><a class="dropdown-item" href="<%=user_path(current_user)%>">View your profile</a></li>
+                 <%= button_to "Delete profile",  user_path(current_user),  class: "dropdown-item text-danger", method: :delete %>
             </ul>
           </li>
 
