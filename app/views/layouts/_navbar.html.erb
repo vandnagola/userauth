@@ -7,29 +7,37 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <%= link_to "Articles", articles_path, class: "nav-link" %>
-        </li>
-        <li class="nav-item">
           <a class="nav-link" href="<%=users_path%>">Blogger</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
+            Article
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="<%=new_article_path%>">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <% if logged_in? %>
+               <li><a class="dropdown-item" href="<%=new_article_path%>">craete new article</a></li>
+            <%end%>
+
+            <li><a class="dropdown-item" href="<%=articles_path%>">View Article</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">Something else here</a></li>
           </ul>
         </li>
         <% if logged_in? %>
-          <li class="nav-item">
-            <%= link_to current_user.username, user_path(current_user), class: "nav-link" %>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+               Profile [<%= current_user.username %>]
+            </a>
+            <ul class="dropdown-menu">
+                 <li><a class="dropdown-item" href="<%=edit_user_path(current_user)%>">Edit your profile</a></li>
+              <li><a class="dropdown-item" href="<%=user_path(current_user)%>">View your profile</a></li>
+            </ul>
           </li>
+
           <li class="nav-item">
             <%= link_to 'Logout', logout_path, class: "nav-link", method: :delete %>
           </li>
+
         <% else %>
           <li class="nav-item">
             <%= link_to 'Log in', login_path, class: "nav-link" %>
@@ -37,6 +45,7 @@
           <li class="nav-item">
             <%= link_to 'Sign up', signup_path, class: "nav-link" %>
           </li>
+
         <% end %>
       </ul>
       <form class="d-flex" role="search">
