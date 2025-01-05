@@ -2,8 +2,8 @@
   <h1 class="text-center mt-4"><%= @user.username %></h1>
 </div>
 <div class="text-center mt-4">
-  <% if @user.profile_pic.content_type.in?(%w[image/jpg, image/png]) %>
-    <%= link_to image_tag(@user.profile_pic_as_thumbnail), @user.profile_pic if @user.profile_pic.attached? %>
+  <% if @user.profile_pic_as_thumbnail %>
+    <%= link_to image_tag(@user.profile_pic_as_thumbnail), url_for(@user.profile_pic)%>
   <% end %>
 </div>
 <% if logged_in? && @user == current_user %>

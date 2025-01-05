@@ -13,7 +13,8 @@ class User < ApplicationRecord
 					  format:{with: VALID_EMAIL_FORMATE}
 
 	def profile_pic_as_thumbnail
-		return unless profile_pic.content_type.in?(%w[profile_pic/jpg, profile_pic/png])
+		return unless profile_pic.attached? && profile_pic.content_type.in?(%w[image/jpg image/jpeg image/png])
+
 		profile_pic.variant(resize_to_limit: [300, 300]).processed
 	end
 
