@@ -2,6 +2,7 @@ class User < ApplicationRecord
 	has_secure_password
 	before_save {self.email = email.downcase}
 	has_many :articles, dependent: :destroy
+	has_one_attached :profile_pic
 	validates :username, presence: true, 
 						length: {minimum:3, maximum:25}, 
 						uniqueness: {case_sensitive: false}
@@ -10,5 +11,10 @@ class User < ApplicationRecord
 					  length: {maximum:150},
 					  uniqueness: {case_sensitive: false},
 					  format:{with: VALID_EMAIL_FORMATE}
+
+	def profile_pic_as_thumbnail
+		return unless profile_pic.content_type.in?(%w[profile_pic/jpg, profile_pic/png])
+		profile_pic.variant(resize_to_limit: [300, 300]).processed
+	end
 
 end

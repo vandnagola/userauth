@@ -29,24 +29,24 @@ class UsersController < ApplicationController
 
 	def edit
     	
-  	end
+  end
 
-  	def destroy
-  		@user.destroy
-  		session[:user_id] = nil if @user == current_user
-  		flash[:notice] = "Account and all associated articles successfully deleted"
-    	redirect_to users_path
-  	end
+	def destroy
+		@user.destroy
+		session[:user_id] = nil if @user == current_user
+		flash[:notice] = "Account and all associated articles successfully deleted"
+  	redirect_to users_path
+	end
 
-  	def update
-	    
-	    if @user.update(user_params)
-	      flash[:notice] = "Your account information was successfully updated"
-	      redirect_to @user
-	    else
-	      render 'edit'
-	    end
-  	end
+	def update
+    
+    if @user.update(user_params)
+      flash[:notice] = "Your account information was successfully updated"
+      redirect_to @user
+    else
+      render 'edit'
+    end
+	end
 
 	private
 
@@ -55,7 +55,7 @@ class UsersController < ApplicationController
 	end
 
 	def user_params
-		params.require(:user).permit(:username, :email, :password)
+		params.require(:user).permit(:username, :email, :password, :profile_pic)
 	end
 
 	def require_same_user
