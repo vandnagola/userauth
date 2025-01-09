@@ -1,31 +1,40 @@
 <div class="container">
-  <% @articles.each do |article| %>
-    <div class="row justify-content-md-center">
-      <div class="col-8 mt-4">
+  <div class="row">
+    <% @articles.each do |article| %>
+      <div class="col-md-4 mt-4">
         <div class="card text-center shadow mb-5 bg-white rounded">
           <div class="card-header font-italic">
             <% if article.user %>
               <%= link_to article.user.username, user_path(article.user) %>
             <% end %>
-          </div>
-          <div class="card-body">
-            <%= display_attached_file(article)
-            <h5 class="card-title"><%= link_to article.title, article_path(article), class: "text-success" %></h5>
-            <p class="card-text"><%= truncate(article.description, length: 100) %></p>
-            <%= link_to "View", article_path(article), class: "btn btn-outline-success" %>
             <% if logged_in? && (article.user == current_user || current_user.admin?) %>
-              <%= link_to "Edit", edit_article_path(article), class: "btn btn-outline-info" %>
-              <%= button_to "Delete", article_path(article), class: "btn btn-outline-danger", method: :delete, data: {confirm: "Are you sure?"} %>
-            <%end%>              
-            </div>
+              <div class="d-flex justify-content-end">
+                <%= link_to edit_article_path(article), class: "btn btn-outline-primary me-2 text-dark" do %>
+                  <i class="fas fa-edit"></i>
+                <% end %>
+                <%= button_to article_path(article), class: "btn btn-outline-danger", method: :delete, data: {confirm: "Are you sure?"} do %>
+                  <i class="fas fa-trash-alt"></i>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+
+          <% if article.file.attached? %>
+            <%= display_attached_file(article) %>
+          <% end %>
+          <div class="card-body">
+            <h5 class="card-title"><%= link_to article.title, article_path(article), class: "text-success" %></h5>
+            <p class="card-text">
+              <%= truncate(article.description, length: 90) %>
+              <%= link_to "Read More", article_path(article), class: "text-info" %> 
+            </p>
+          </div>
           <div class="card-footer text-muted">
             <small>Created <%= time_ago_in_words(article.created_at) %> ago, 
             edited <%= time_ago_in_words(article.updated_at) %> ago</small>
           </div>
         </div>
       </div>
-    </div>
-  <% end %>
+    <% end %>
   </div>
 </div>
-

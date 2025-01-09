@@ -9,8 +9,14 @@
           </div>
           <div class="card-body">
             <%= display_attached_file(@article) %>
-            <h2 class="text-center mt-4"><%= @article.description %></h2>
+
+            <p class="overview text-center mt-4">
+              <%= @article.description %>
+            </p>
           </div>
+          <%= link_to articles_path, class: "btn btn-outline-secondary" do %>
+            <i class="fas fa-arrow-left"></i> Back to Articles
+          <% end %>
           <div class="card-footer text-muted">
             <small>Created <%= time_ago_in_words(@article.created_at) %> ago, 
             edited <%= time_ago_in_words(@article.updated_at) %> ago</small>
