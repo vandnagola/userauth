@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  before_action :set_article, only: %i[ show edit update destroy ]
+  before_action :set_article, only: %i[ show edit update destroy download]
   before_action :require_user, except: [:show, :index]
   before_action :require_same_user, only: [:edit, :update, :destroy]
 
@@ -59,6 +59,17 @@ class ArticlesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to articles_url, notice: "Article was successfully destroyed." }
       format.json { head :no_content }
+    end
+  end
+
+  def download
+    if @article.file.attached?
+      send_data @article.file.download,
+                filename: @article.file.filename.to_s,
+                type: @article.file.content_type,
+                disposition: 'attachment'
+    else
+      redirect_to @article, alert: "File not available for download"
     end
   end
 

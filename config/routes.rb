@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   root "pages#home"
   
-  resources :articles
+  resources :articles do
+    member do 
+      get :download
+    end
+  end
   get "signup", to: "users#new"
   post "signup", to: "users#create"
 
